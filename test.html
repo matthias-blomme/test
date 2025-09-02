@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Architecture Foundations: An Interactive Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+            color: #1e293b;
+        }
+        .section-title {
+            border-bottom: 3px solid #3b82f6;
+        }
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .icon {
+            width: 50px;
+            height: 50px;
+            stroke-width: 1.5;
+        }
+        .fallacy-card {
+            border-left: 4px solid #ef4444;
+        }
+        .advantage-card {
+            border-left: 4px solid #22c55e;
+        }
+        .disadvantage-card {
+            border-left: 4px solid #f97316;
+        }
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .collapsible-toggle:checked + .collapsible-content {
+            max-height: 1000px; /* Adjust as needed */
+        }
+        .team-card {
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            color: white;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+    <div class="max-w-6xl mx-auto">
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-blue-600">Chapter 9: Foundations of Software Architecture</h1>
+            <p class="text-lg text-slate-600 mt-2">An interactive guide to the core concepts, patterns, and trade-offs.</p>
+        </header>
+
+        <main class="space-y-16">
+            <!-- Styles vs. Patterns -->
+            <section id="styles-vs-patterns" class="card p-8">
+                <div class="flex items-center space-x-4 mb-4">
+                    <svg class="icon text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"></path></svg>
+                    <h2 class="text-3xl font-bold section-title pb-2">Styles vs. Patterns</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-semibold mb-3 text-blue-700">Architecture Style</h3>
+                        <p class="text-slate-700">Describes the overall shape and characteristics of an architecture. It's a blueprint defining:</p>
+                        <ul class="list-disc list-inside mt-4 space-y-2 text-slate-600">
+                            <li><strong>Component Topology:</strong> How components are organized (e.g., layers, modules).</li>
+                            <li><strong>Physical Architecture:</strong> Monolithic or distributed deployment.</li>
+                            <li><strong>Deployment:</strong> Frequency and granularity of releases.</li>
+                            <li><strong>Communication Style:</strong> How components interact (e.g., method calls, REST, messaging).</li>
+                            <li><strong>Data Topology:</strong> How data is structured (e.g., single monolithic DB, separate DBs).</li>
+                        </ul>
+                    </div>
+                     <div>
+                        <h3 class="text-2xl font-semibold mb-3 text-blue-700">Architecture Pattern</h3>
+                        <p class="text-slate-700">A contextualized, reusable solution to a commonly occurring problem within a given context. It's more specific than a style.</p>
+                        <div class="mt-4 p-4 bg-blue-50 border-l-4 border-blue-400 rounded-r-lg">
+                            <p><strong class="font-semibold">Key takeaway:</strong> A <span class="font-bold text-blue-600">style</span> is the high-level strategy for the whole system, while a <span class="font-bold text-blue-600">pattern</span> is a tactical, proven solution for a part of it. New styles often emerge from combining new ecosystem capabilities with existing patterns.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Big Ball of Mud -->
+            <section id="big-ball-of-mud" class="card p-8 bg-red-50 border border-red-200">
+                 <div class="flex items-center space-x-4 mb-4">
+                    <svg class="icon text-red-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path></svg>
+                    <h2 class="text-3xl font-bold section-title !border-red-500 pb-2">The Anti-Pattern: Big Ball of Mud</h2>
+                </div>
+                <p class="text-slate-700 mb-4">This describes the <strong class="text-red-600">absence of a discernible architecture</strong>. It's a haphazardly structured, sprawling, and sloppy system.</p>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <h4 class="font-semibold text-lg text-red-700">Symptoms:</h4>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-slate-600">
+                            <li>Unregulated growth and repeated, expedient repairs.</li>
+                            <li>Information is shared promiscuously (global data, duplication).</li>
+                            <li>High coupling: nearly all parts are connected to all other parts.</li>
+                            <li>Changes are terrifying and have unpredictable ripple effects.</li>
+                        </ul>
+                        <h4 class="font-semibold text-lg text-red-700 mt-4">Consequences:</h4>
+                        <ul class="list-disc list-inside mt-2 space-y-1 text-slate-600">
+                           <li>Extremely difficult to change or maintain.</li>
+                           <li>Poor testability, scalability, and performance.</li>
+                           <li>Developer time is spent chasing bugs, not adding features.</li>
+                        </ul>
+                    </div>
+                    <div class="text-center p-4">
+                        <img src="https://i.imgur.com/rQ0I3hO.png" alt="Visualization of a Big Ball of Mud architecture" class="max-w-xs mx-auto rounded-full shadow-lg">
+                        <p class="text-sm text-slate-500 mt-2 italic">A visualization showing extreme coupling between classes.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Architecture Partitioning -->
+            <section id="partitioning" class="card p-8">
+                 <div class="flex items-center space-x-4 mb-4">
+                    <svg class="icon text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-1.621-.87a3 3 0 01-.879-2.122v-1.007m-9 0a9 9 0 0118 0v1.007a3 3 0 01-1.11 2.259l-1.622.871M3 6.75l.161.871M21 6.75l-.161.871M3 6.75h18M3 6.75a9 9 0 0018 0h-18z"></path></svg>
+                    <h2 class="text-3xl font-bold section-title pb-2">Architecture Partitioning: The First Big Decision</h2>
+                </div>
+                <p class="text-slate-700 mb-6">The way you partition components at the top level fundamentally defines your architecture style. It's a critical choice with significant trade-offs.</p>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Technical Partitioning -->
+                    <div class="p-6 border rounded-lg">
+                        <h3 class="text-2xl font-semibold mb-3 text-blue-700">Technical Partitioning (Layered)</h3>
+                        <img src="https://i.imgur.com/EIX3s5g.png" alt="Technical Partitioning Diagram" class="w-full h-auto rounded-lg mb-4 border">
+                        <p class="mb-4">Components are organized by their technical capability (e.g., Presentation, Business Rules, Persistence).</p>
+                        <div class="advantage-card p-4 rounded-lg bg-green-50 mb-4">
+                            <h5 class="font-bold text-green-800">Advantages:</h5>
+                            <ul class="list-disc list-inside text-sm text-slate-600">
+                                <li>Clear separation of technical concerns.</li>
+                                <li>Easy for developers to find code by its technical type.</li>
+                                <li>Aligns with classic patterns like Model-View-Controller (MVC).</li>
+                            </ul>
+                        </div>
+                        <div class="disadvantage-card p-4 rounded-lg bg-orange-50">
+                            <h5 class="font-bold text-orange-800">Disadvantages:</h5>
+                            <ul class="list-disc list-inside text-sm text-slate-600">
+                                <li>A single business feature (e.g., "CatalogCheckout") is smeared across all layers.</li>
+                                <li>Changes to a feature require touching multiple, highly-coupled layers.</li>
+                                <li>Can lead to organizational silos (UI team, DB team, etc.) due to Conway's Law.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- Domain Partitioning -->
+                    <div class="p-6 border rounded-lg">
+                        <h3 class="text-2xl font-semibold mb-3 text-blue-700">Domain Partitioning (Modular)</h3>
+                         <img src="https://i.imgur.com/t3gC9Hw.png" alt="Domain Partitioning Diagram" class="w-full h-auto rounded-lg mb-4 border">
+                        <p class="mb-4">Components are organized by business domain or workflow (e.g., CatalogCheckout, Reporting, Inventory).</p>
+                        <div class="advantage-card p-4 rounded-lg bg-green-50 mb-4">
+                            <h5 class="font-bold text-green-800">Advantages:</h5>
+                            <ul class="list-disc list-inside text-sm text-slate-600">
+                                <li>Modeled on how the business actually functions.</li>
+                                <li>Easier to build cross-functional teams around domains.</li>
+                                <li>Code for a single feature is co-located in one module.</li>
+                                <li>Easier future migration to distributed architectures (like microservices).</li>
+                            </ul>
+                        </div>
+                        <div class="disadvantage-card p-4 rounded-lg bg-orange-50">
+                            <h5 class="font-bold text-orange-800">Disadvantages:</h5>
+                            <ul class="list-disc list-inside text-sm text-slate-600">
+                                <li>Requires a deeper understanding of the business domain.</li>
+                                <li>Shared technical code (e.g., custom persistence logic) might appear in multiple places if not managed well.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Monolithic vs. Distributed -->
+            <section id="monolithic-vs-distributed" class="card p-8">
+                 <div class="flex items-center space-x-4 mb-4">
+                    <svg class="icon text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25z"></path></svg>
+                    <h2 class="text-3xl font-bold section-title pb-2">Monolithic vs. Distributed Architectures</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                     <div class="p-6 border-2 border-slate-200 rounded-lg">
+                        <h3 class="text-2xl font-semibold mb-3 text-slate-800">Monolithic</h3>
+                        <p class="text-slate-600">The entire application is built and deployed as a <strong class="font-semibold">single unit</strong>. Communication between components happens via in-memory function calls.</p>
+                        <p class="font-bold mt-4">Examples:</p>
+                        <ul class="list-disc list-inside text-slate-600">
+                            <li>Layered Architecture</li>
+                            <li>Pipeline Architecture</li>
+                            <li>Microkernel Architecture</li>
+                        </ul>
+                    </div>
+                    <div class="p-6 border-2 border-blue-300 rounded-lg bg-blue-50">
+                        <h3 class="text-2xl font-semibold mb-3 text-blue-800">Distributed</h3>
+                        <p class="text-slate-600">The application is composed of <strong class="font-semibold">multiple, separate deployment units</strong> (services) that communicate over a network.</p>
+                        <p class="font-bold mt-4">Examples:</p>
+                        <ul class="list-disc list-inside text-slate-600">
+                            <li>Service-Based Architecture</li>
+                            <li>Event-Driven Architecture</li>
+                            <li>Microservices</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Fallacies of Distributed Computing -->
+            <section id="fallacies" class="card p-8">
+                 <div class="flex items-center space-x-4 mb-4">
+                     <svg class="icon text-red-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"></path></svg>
+                    <h2 class="text-3xl font-bold section-title !border-red-500 pb-2">The 11 Fallacies of Distributed Computing</h2>
+                </div>
+                <p class="text-slate-700 mb-6">Distributed systems are powerful but come with significant trade-offs. These are common, false assumptions architects and developers make, leading to system failure.</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Fallacy Cards -->
+                    <div class="fallacy-card p-4 bg-white rounded-lg shadow"><strong>1. The Network Is Reliable:</strong> It's not. Connections drop, packets get lost. You need timeouts, retries, and circuit breakers.</div>
+                    <div class="fallacy-card p-4 bg-white rounded-lg shadow"><strong>2. Latency Is Zero:</strong> Network calls are orders of magnitude slower (milliseconds) than in-memory calls (nanoseconds).</div>
+                    <div class="fallacy-card p-4 bg-white rounded-lg shadow"><strong>3. Bandwidth Is Infinite:</strong> Inefficient calls (stamp coupling) can consume massive bandwidth, slowing the entire system.</div>
+                    <div class="fallacy-card p-4 bg-white rounded-lg shadow"><strong>4. The Network Is Secure:</strong> Every remote endpoint is a potential attack vector. The threat surface area is massive.</div>
+                    <div class="fallacy-card p-4 bg-white rounded-lg shadow"><strong>5. The Topology Never Changes:</strong> Network infrastructure (routers, firewalls) is constantly being updated, which can break your latency assumptions.</div>
+                    <div class="fallacy-card p-4 bg-white rounded-lg shadow"><strong>6. There Is Only One Administrator:</strong> There are dozens. You need to coordinate with many people to manage the network.</div>
+                    <div class="fallacy-card p-4 bg-white rounded-lg shadow"><strong>7. Transport Cost Is Zero:</strong> Distributed systems require more hardware, servers, gateways, firewalls, etc. It costs real money.</div>
+                    <div class="fallacy-card p-4 bg-white rounded-lg shadow"><strong>8. The Network Is Homogeneous:</strong> It's made of hardware from multiple vendors that don't always play well together.</div>
+                    <div class="fallacy-card p-4 bg-white rounded-lg shadow"><strong>9. Versioning Is Easy:</strong> Managing contract changes between services is complex and full of trade-offs (how many versions to support, when to deprecate).</div>
+                    <div class="fallacy-card p-4 bg-white rounded-lg shadow"><strong>10. Compensating Updates Always Work:</strong> The logic to reverse a failed transaction can also fail, leaving data in an inconsistent state.</div>
+                    <div class="fallacy-card p-4 bg-white rounded-lg shadow"><strong>11. Observability is Optional:</strong> It's not. Without comprehensive logging and monitoring, debugging failures is nearly impossible.</div>
+                </div>
+            </section>
+
+             <!-- Team Topologies -->
+            <section id="team-topologies" class="card p-8">
+                 <div class="flex items-center space-x-4 mb-4">
+                     <svg class="icon text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m-7.284-2.72c.263.264.526.528.789.792a9.094 9.094 0 013.741-.479 3 3 0 014.682-2.72M13.5 21H9.75M13.5 21a9.094 9.094 0 013.741-.479 3 3 0 01-4.682-2.72m-7.284 2.72c-.263-.264-.526-.528-.789-.792a9.094 9.094 0 00-3.741.479 3 3 0 004.682 2.72M6.75 15.75c.263.264.526.528.789.792a9.094 9.094 0 003.741.479 3 3 0 00-4.682 2.72m-7.284-2.72c-.263-.264-.526-.528-.789-.792a9.094 9.094 0 01-3.741.479 3 3 0 014.682 2.72m10.5-11.25h-3.375m3.375 0V1.5m-3.375 3.375V1.5m3.375 3.375h3.375m-3.375-3.375h3.375m-3.375 0V1.5m0 3.375v3.375m-3.375-3.375v3.375m-3.375 0v3.375m0-3.375h3.375m-3.375 0h3.375"></path></svg>
+                    <h2 class="text-3xl font-bold section-title pb-2">Team Topologies & Conway's Law</h2>
+                </div>
+                <div class="mb-6 p-4 bg-slate-100 rounded-lg">
+                   <p class="font-semibold text-center text-lg text-slate-800">"Organizations which design systems... are constrained to produce designs which are copies of the communication structures of these organizations." <br/>- Melvin Conway</p>
+                </div>
+                <p class="text-slate-700 mb-6">Your team structure and your architecture are deeply intertwined. A smart architect considers how team organization will support (or hinder) the desired architecture. This is sometimes called the <strong class="font-semibold">"Inverse Conway Maneuver"</strong>—designing your team to achieve your target architecture.</p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="team-card p-6 rounded-lg shadow-lg">
+                        <h4 class="font-bold text-xl mb-2">Stream-Aligned Teams</h4>
+                        <p class="text-sm">Focus on a single stream of work (a product, service, feature set). They are designed for speed and delivering discrete value. Your architecture should empower them to work autonomously.</p>
+                    </div>
+                    <div class="team-card p-6 rounded-lg shadow-lg">
+                        <h4 class="font-bold text-xl mb-2">Enabling Teams</h4>
+                        <p class="text-sm">Bridge capability gaps by providing specialized knowledge and research (e.g., a security or performance team). They collaborate with stream-aligned teams to help them level up.</p>
+                    </div>
+                     <div class="team-card p-6 rounded-lg shadow-lg">
+                        <h4 class="font-bold text-xl mb-2">Complicated-Subsystem Teams</h4>
+                        <p class="text-sm">Manage highly complex parts of the system (e.g., a video processing engine) to reduce the cognitive load on other teams.</p>
+                    </div>
+                     <div class="team-card p-6 rounded-lg shadow-lg">
+                        <h4 class="font-bold text-xl mb-2">Platform Teams</h4>
+                        <p class="text-sm">Provide internal, self-service tools, APIs, and services that other teams use to build products faster. They create a "paved road" for development.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="text-center mt-16 text-slate-500 text-sm">
+            <p>Infographic based on "Software Architecture: The Hard Parts" - Chapter 9. Designed to provide a clear, high-level overview of foundational concepts.</p>
+        </footer>
+    </div>
+</body>
+</html>
+
